@@ -1,0 +1,29 @@
+
+services:
+  postgis-database:
+    image: postgis/postgis:16-3.4
+    container_name: database
+    restart: always
+    env_file: .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  spring-application:
+    build: .
+    container_name: application
+    depends_on:
+      postgis-database:
+        condition: service_healthy
+    env_file: .env
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:
