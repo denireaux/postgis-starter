@@ -26,8 +26,11 @@ public class LocationService {
         // Create the Point with the lat and long
         Point point = geometryFactory.createPoint(new Coordinate(lon, lat)); 
 
+        // Generate Random City Name
+        String cityName = CityGenerator.randomCity();
+
         // Make the location
-        Location location = new Location("Test Location", point);
+        Location location = new Location(cityName, point);
 
         // Save the location
         locationRepository.save(location);
