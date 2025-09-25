@@ -37,3 +37,23 @@ curl -X POST "http://localhost:8080/locations?name=Denver&lat=39.7392&lng=-104.9
 ```
 curl http://localhost:8080/locations
 ```
+
+# The Talon Ark external sources...
+## The links for reference
+```
+https://talonark-postgis.i2cv.io/browser/
+https://talonark-postgis.i2cv.io/
+https://talonark-pgadmin.i2cv.io/
+```
+___
+
+# Endpoints...
+## Saves a location with random points into the PostGIS database
+```
+/save-test
+```
+
+## Queries all locations in the PostGIS database
+```
+/get-locations
+```

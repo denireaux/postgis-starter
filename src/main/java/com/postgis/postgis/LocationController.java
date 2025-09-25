@@ -1,35 +1,33 @@
 package com.postgis.postgis;
 
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.Coordinate;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.locationtech.jts.geom.GeometryFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.postgis.postgis.service.LocationService;
+
 @RestController
-@RequestMapping("/locations")
 public class LocationController {
 
-    private final LocationRepository repo;
+    private final LocationRepository locationRepository;
     private final GeometryFactory geometryFactory = new GeometryFactory();
+    final Logger log = LoggerFactory.getLogger(LocationController.class);
 
-    public LocationController(LocationRepository repo) {
-        this.repo = repo;
+    public LocationController(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
     }
 
-    @GetMapping
-    public List<Location> getAll() {
-        return repo.findAll();
+    @GetMapping("/save-test")
+    public String saveTestLocation() {
+        return LocationService.saveRandomLocation(locationRepository, geometryFactory);
     }
 
-    @PostMapping
-    public Location create(@RequestParam String name,
-                           @RequestParam double lat,
-                           @RequestParam double lng) {
-        Point point = geometryFactory.createPoint(new Coordinate(lng, lat));
-        point.setSRID(4326); // TODO: Align this with database
-        Location loc = new Location(name, point);
-        return repo.save(loc);
+    @GetMapping("/get-locations")
+    public List<Location> getAllLocations() {
+        return locationRepository.findAll();
     }
 }

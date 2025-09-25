@@ -36,11 +36,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Hibernate Spatial (for PostGIS support) -->
+            <!-- Hibernate Spatial (must match Hibernate ORM core version) -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-spatial</artifactId>
-            <version>6.5.0.Final</version>
+            <version>6.6.29.Final</version>
         </dependency>
 
         <!-- Spring Boot Test -->
